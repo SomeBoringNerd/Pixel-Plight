@@ -25,6 +25,12 @@ public:
 		Other = new Button("Other games", ((1280 / 2) - 300), 450, 600);
 		Option = new Button("Options", ((1280 / 2) - 300), 550, 290);
 		Quit = new Button("Quit", ((1280 / 2) + 10), 550, 290);
+		std::cout << "Trying to play music" << std::endl;
+
+		music.openFromFile("content/music/main.wav");
+		music.setVolume(100);
+		music.setLoop(true);
+		music.play();
 	};
 
 	void Render(sf::RenderWindow& getWindow) override
@@ -58,6 +64,7 @@ public:
 	}
 
 private:
+	sf::Music music;
 	sf::RenderWindow* window;
 	Button *Quit, *Play, *Option, *Credit, *Other;
 };

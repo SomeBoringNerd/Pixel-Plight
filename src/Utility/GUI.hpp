@@ -95,13 +95,16 @@ public:
 
 		getWindow.draw(text);
 
-		if (isHovering && sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		if (isHovering && sf::Mouse::isButtonPressed(sf::Mouse::Left) && sf::Mouse::isButtonPressed(sf::Mouse::Left) != mouseState)
 		{
 			onClick(getWindow);
 		}
+
+		mouseState = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 	}
 
 private:
+	bool mouseState;
 	std::string name;
 	sf::Font font;
 	float x, y, length;
