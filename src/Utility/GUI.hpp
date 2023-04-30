@@ -28,7 +28,7 @@ public:
 
 	bool Hover(sf::Vector2i pos, sf::Vector2u windowSize)
 	{
-		float heightPercentage = 0.07; // Adjust this value to change the hitbox height percentage
+		float heightPercentage = 0.09f; // Adjust this value to change the hitbox height percentage
 
 		float buttonHeight = windowSize.y * heightPercentage;
 
