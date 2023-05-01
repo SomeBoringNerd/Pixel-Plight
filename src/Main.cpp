@@ -1,6 +1,8 @@
 #include "Platform/Platform.hpp"
+#include "Scenes/Credit.hpp"
 #include "Scenes/MainMenu.hpp"
 #include "Scenes/Scene.hpp"
+#include "TheDumpsterFire.hpp"
 #include "Utility/SceneManager.hpp"
 
 #include <SFML/Audio.hpp>
@@ -28,12 +30,14 @@ int main()
 	float screenScalingFactor = platform.getScreenScalingFactor(window.getSystemHandle());
 	// Use the screenScalingFactor
 	window.create(sf::VideoMode(1280.0f * screenScalingFactor, 720.0f * screenScalingFactor),
-		"Walking Simulator | SFML Edition");
+		"SomeBoringGame idk");
 	platform.setIcon(window.getSystemHandle());
 
 	sf::RectangleShape BackGround(sf::Vector2f(1920, 1080));
 	sf::Color DarkSlate(69, 69, 69);
 	sf::Event event;
+
+	new SceneManager();
 
 	BackGround.setFillColor(DarkSlate);
 
@@ -58,4 +62,20 @@ int main()
 	}
 
 	return 0;
+}
+
+void LoadAnotherScene(std::string name)
+{
+	if (name == "MainMenu")
+	{
+		MainMenu* menu = new MainMenu();
+
+		SceneManager::LoadScene(menu);
+	}
+	else if (name == "Credits")
+	{
+		Credit* cred = new Credit();
+
+		SceneManager::LoadScene(cred);
+	}
 }

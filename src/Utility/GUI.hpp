@@ -43,6 +43,24 @@ public:
 		return (pos.x < currentX + currentWidth && pos.x > currentX && pos.y < currentY + currentHeight && pos.y > currentY);
 	}
 
+	void Render(sf::RenderWindow& getWindow, sf::Vector2u windowSize, void (*_setup)(void*), void* userData = nullptr)
+	{
+
+		this->Render(getWindow, windowSize);
+
+		bool isHovering = Hover(sf::Mouse::getPosition(getWindow), windowSize);
+
+		if (isHovering && sf::Mouse::isButtonPressed(sf::Mouse::Left) && sf::Mouse::isButtonPressed(sf::Mouse::Left) != mouseState)
+		{
+			if (_setup != nullptr)
+			{
+				_setup(userData);
+			}
+		}
+
+		mouseState = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+	}
+
 	void Render(sf::RenderWindow& getWindow, sf::Vector2u windowSize)
 	{
 
@@ -94,14 +112,25 @@ public:
 		text.setPosition(sf::Vector2f(x + length / 2 - text.getLocalBounds().width / 2, y - 10));
 
 		getWindow.draw(text);
-
-		if (isHovering && sf::Mouse::isButtonPressed(sf::Mouse::Left) && sf::Mouse::isButtonPressed(sf::Mouse::Left) != mouseState)
-		{
-			onClick(getWindow);
-		}
-
-		mouseState = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 	}
+
+	void onClick(sf::RenderWindow& window)
+	{
+		if (getName() == "Quit")
+		{
+			window.close();
+		}
+		else if (getName() == "Back")
+		{
+			//MainMenu* menu = new MainMenu();
+			//SceneManager::LoadScene(menu);
+		}
+		else if (getName() == "Options")
+		{
+			//Credit* credit = new Credit();
+			//SceneManager::LoadScene(credit);
+		}
+	};
 
 private:
 	bool mouseState;
@@ -110,11 +139,4 @@ private:
 	float x, y, length;
 	float widthPercentage, heightPercentage;
 	sf::Vector2u initialWindowSize;
-	void onClick(sf::RenderWindow& window)
-	{
-		if (getName() == "Quit")
-		{
-			window.close();
-		}
-	};
 };
