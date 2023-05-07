@@ -9,18 +9,6 @@ void SceneManager::LoadScene(Scene* _scene)
 	isSceneLoaded = 1;
 }
 
-void SceneManager::LoadMainMenu()
-{
-	MainMenu* mainMenuScene = new MainMenu();
-	LoadScene(mainMenuScene);
-}
-
-void SceneManager::LoadCredits()
-{
-	Credit* creditScene = new Credit();
-	LoadScene(creditScene);
-}
-
 void SceneManager::Update(sf::RenderWindow& getWindow)
 {
 	scene->Render(getWindow);

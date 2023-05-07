@@ -2,6 +2,7 @@
 #include "Scenes/Credit.hpp"
 #include "Scenes/MainMenu.hpp"
 #include "Scenes/Scene.hpp"
+#include "Scenes/WalkScene.hpp"
 #include "TheDumpsterFire.hpp"
 #include "Utility/SceneManager.hpp"
 
@@ -29,8 +30,9 @@ int main()
 	// in Windows at least, this must be called before creating the window
 	float screenScalingFactor = platform.getScreenScalingFactor(window.getSystemHandle());
 	// Use the screenScalingFactor
-	window.create(sf::VideoMode(1280.0f * screenScalingFactor, 720.0f * screenScalingFactor),
-		"SomeBoringGame idk");
+	window.create(sf::VideoMode(1280.0f * screenScalingFactor, 720.0f * screenScalingFactor), "Pixel Plight");
+	window.setFramerateLimit(60);
+
 	platform.setIcon(window.getSystemHandle());
 
 	sf::RectangleShape BackGround(sf::Vector2f(1920, 1080));
@@ -77,5 +79,11 @@ void LoadAnotherScene(std::string name)
 		Credit* cred = new Credit();
 
 		SceneManager::LoadScene(cred);
+	}
+	else if (name == "Walker")
+	{
+		Walker* walk = new Walker();
+
+		SceneManager::LoadScene(walk);
 	}
 }

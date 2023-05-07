@@ -62,13 +62,22 @@ public:
 		text.setPosition((1280 / 2) - (text.getLocalBounds().width / 2), 50);
 		getWindow.draw(text);
 
-		std::string __name = "@zoeyoung2563 : musics that are used in the game";
-		sf::Text _text(__name, font);
-		_text.setCharacterSize(40);
-		_text.setLetterSpacing(2);
-		_text.setStyle(sf::Text::Bold);
-		_text.setPosition((1280 / 2) - (_text.getLocalBounds().width / 2), 200);
-		getWindow.draw(_text);
+		text.setCharacterSize(40);
+
+		_name = "@zoeyoung2563 : musics that are used in the game";
+		text.setString(_name);
+		text.setPosition((1280 / 2) - (text.getLocalBounds().width / 2), 200);
+		getWindow.draw(text);
+
+		_name = "Aseprite team : making an amazing";
+		text.setString(_name);
+		text.setPosition((1280 / 2) - (text.getLocalBounds().width / 2), 250);
+		getWindow.draw(text);
+
+		_name = "pixel art software and making it open source";
+		text.setString(_name);
+		text.setPosition((1280 / 2) - (text.getLocalBounds().width / 2), 290);
+		getWindow.draw(text);
 
 		back->Render(getWindow, getWindow.getSize(), &BackToMain, this);
 	}

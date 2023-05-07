@@ -50,9 +50,17 @@ public:
 	static void Credits(void* userData)
 	{
 		MainMenu* mainMenu = static_cast<MainMenu*>(userData);
-		mainMenu->ThisFunctionAllowTheCodeToCompileDontQuestionItPlease();
+		mainMenu->music.stop();
 		std::cout << "Should switch scenes" << std::endl;
 		LoadAnotherScene("Credits");
+	}
+
+	static void PlayButton(void* userData)
+	{
+		MainMenu* mainMenu = static_cast<MainMenu*>(userData);
+		mainMenu->music.stop();
+		std::cout << "Should switch scenes" << std::endl;
+		LoadAnotherScene("Walker");
 	}
 
 	void Render(sf::RenderWindow& getWindow) override
@@ -69,7 +77,7 @@ public:
 		sf::Font font;
 		font.loadFromFile("content/fonts/BebasNeue-Regular.ttf");
 		// Create a text
-		std::string _name = "[[GAME TITLE]]";
+		std::string _name = "Pixel Plight";
 		sf::Text text(_name, font);
 		text.setCharacterSize(80);
 		text.setLetterSpacing(2);
@@ -79,7 +87,7 @@ public:
 		// Draw it
 		getWindow.draw(text);
 
-		Play->Render(getWindow, getWindow.getSize());
+		Play->Render(getWindow, getWindow.getSize(), &PlayButton, this);
 		_Credit->Render(getWindow, getWindow.getSize(), &Credits, this);
 		Other->Render(getWindow, getWindow.getSize());
 		Option->Render(getWindow, getWindow.getSize());
