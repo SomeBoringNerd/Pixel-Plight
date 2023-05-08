@@ -22,10 +22,9 @@ public:
 		this->name = "Credit";
 
 		back = new Button("Back", (25), 720 - 100, 300);
-		std::cout << "Trying to play music" << std::endl;
 
 		music.openFromFile("content/music/credit.wav");
-		music.setVolume(100);
+		music.setVolume(getGlobalMusicVolume());
 		music.setLoop(true);
 		music.play();
 	};
@@ -37,7 +36,6 @@ public:
 	{
 		Credit* creditS = static_cast<Credit*>(userData);
 		creditS->music.stop();
-		std::cout << "Should switch scenes" << std::endl;
 		LoadAnotherScene("MainMenu");
 	}
 

@@ -13,3 +13,6 @@ in better term : any function / variables that need to be in the global scope fo
 #include <string>
 
 void LoadAnotherScene(std::string name);
+
+int getGlobalMusicVolume();
+int getWindowState();

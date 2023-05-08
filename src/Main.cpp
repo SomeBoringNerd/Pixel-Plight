@@ -12,6 +12,8 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
+#define DRAW_HITBOXES true
+
 sf::RenderWindow window;
 
 static void Exit()
@@ -19,18 +21,39 @@ static void Exit()
 	window.close();
 }
 
+int focus = 1;
+int getWindowState()
+{
+	return focus;
+}
+
 int main()
 {
 	util::Platform platform;
 
-#if defined(_DEBUG)
-	std::cout << "Hello World!" << std::endl;
-#endif
-
 	// in Windows at least, this must be called before creating the window
 	float screenScalingFactor = platform.getScreenScalingFactor(window.getSystemHandle());
+
 	// Use the screenScalingFactor
 	window.create(sf::VideoMode(1280.0f * screenScalingFactor, 720.0f * screenScalingFactor), "Pixel Plight");
+
+	/**** Use icon ****/
+
+	sf::Texture texture;
+	texture.loadFromFile("logo.png");
+
+	sf::Vector2u textureSize = texture.getSize();
+
+	sf::Image image = texture.copyToImage();
+
+	sf::Uint8* buffer = new sf::Uint8[textureSize.x * textureSize.y * 4];
+
+	window.setIcon(64, 64, buffer);
+
+	delete[] buffer;
+
+	/********/
+
 	window.setFramerateLimit(60);
 
 	platform.setIcon(window.getSystemHandle());
@@ -53,13 +76,24 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				Exit();
+			else if (event.type == sf::Event::GainedFocus)
+			{
+				focus = 1;
+			}
+			else if (event.type == sf::Event::LostFocus)
+			{
+				focus = 0;
+			}
 		}
 
-		window.clear();
-		window.draw(BackGround);
+		// dont run game update if the game is not focused
+		if (getWindowState())
+		{
+			window.clear();
+			window.draw(BackGround);
 
-		SceneManager::Update(window);
-
+			SceneManager::Update(window);
+		}
 		window.display();
 	}
 
@@ -86,4 +120,9 @@ void LoadAnotherScene(std::string name)
 
 		SceneManager::LoadScene(walk);
 	}
+}
+
+int getGlobalMusicVolume()
+{
+	return 50;
 }

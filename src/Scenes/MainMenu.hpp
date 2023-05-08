@@ -6,6 +6,7 @@
 #include "Scene.hpp"
 
 #include <iostream>
+#include <stdlib.h>
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
@@ -21,18 +22,16 @@ public:
 	static MainMenu* currentInstance;
 	MainMenu()
 	{
-		std::cout << "MainMenu was created" << std::endl;
 		this->name = "MainMenu";
 
 		Play = new Button("Play", ((1280 / 2) - 300), 250, 600);
 		_Credit = new Button("Credits", ((1280 / 2) - 300), 350, 600);
-		Other = new Button("Other games", ((1280 / 2) - 300), 450, 600);
+		Other = new Button("Other projects", ((1280 / 2) - 300), 450, 600);
 		Option = new Button("Options", ((1280 / 2) - 300), 550, 290);
 		Quit = new Button("Quit", ((1280 / 2) + 10), 550, 290);
-		std::cout << "Trying to play music" << std::endl;
 
 		music.openFromFile("content/music/main.wav");
-		music.setVolume(100);
+		music.setVolume(getGlobalMusicVolume());
 		music.setLoop(true);
 		music.play();
 	};
@@ -47,11 +46,34 @@ public:
 		mainMenu->window->close();
 	}
 
+	static void OtherGames(void* userData)
+	{
+		MainMenu* mainMenu = static_cast<MainMenu*>(userData);
+		// userData need to be used, so we call empty function so that fucking thing can compile
+		mainMenu->ThisFunctionAllowTheCodeToCompileDontQuestionItPlease();
+
+		std::string url = "https://someboringnerd.xyz/projects";
+
+#ifdef _WIN32
+		std::string command = "start " + url;
+		system(command.c_str());
+#elif __linux__
+		std::string command = "xdg-open " + url + " >/dev/null 2>&1";
+
+		system(command.c_str());
+#elif __APPLE__
+		// for macOS
+		std::string command = "open " + url;
+		system(command.c_str());
+#else
+		cout << "Unsupported OS." << endl;
+#endif
+	}
+
 	static void Credits(void* userData)
 	{
 		MainMenu* mainMenu = static_cast<MainMenu*>(userData);
 		mainMenu->music.stop();
-		std::cout << "Should switch scenes" << std::endl;
 		LoadAnotherScene("Credits");
 	}
 
@@ -59,7 +81,6 @@ public:
 	{
 		MainMenu* mainMenu = static_cast<MainMenu*>(userData);
 		mainMenu->music.stop();
-		std::cout << "Should switch scenes" << std::endl;
 		LoadAnotherScene("Walker");
 	}
 
@@ -89,7 +110,7 @@ public:
 
 		Play->Render(getWindow, getWindow.getSize(), &PlayButton, this);
 		_Credit->Render(getWindow, getWindow.getSize(), &Credits, this);
-		Other->Render(getWindow, getWindow.getSize());
+		Other->Render(getWindow, getWindow.getSize(), &OtherGames, this);
 		Option->Render(getWindow, getWindow.getSize());
 		Quit->Render(getWindow, getWindow.getSize(), &Exit, this);
 	}

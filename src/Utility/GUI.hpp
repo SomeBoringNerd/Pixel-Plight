@@ -28,8 +28,7 @@ public:
 
 	bool Hover(sf::Vector2i pos, sf::Vector2u windowSize)
 	{
-		float heightPercentage = 0.09f; // Adjust this value to change the hitbox height percentage
-
+		float heightPercentage = 0.09f;
 		float buttonHeight = windowSize.y * heightPercentage;
 
 		float xRatio = (float)windowSize.x / (float)this->initialWindowSize.x;
@@ -113,24 +112,6 @@ public:
 
 		getWindow.draw(text);
 	}
-
-	void onClick(sf::RenderWindow& window)
-	{
-		if (getName() == "Quit")
-		{
-			window.close();
-		}
-		else if (getName() == "Back")
-		{
-			//MainMenu* menu = new MainMenu();
-			//SceneManager::LoadScene(menu);
-		}
-		else if (getName() == "Options")
-		{
-			//Credit* credit = new Credit();
-			//SceneManager::LoadScene(credit);
-		}
-	};
 
 private:
 	bool mouseState;

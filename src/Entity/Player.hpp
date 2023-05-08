@@ -16,13 +16,12 @@ class Player : public Entity
 public:
 	using Entity::Entity;
 
-	sf::Texture sprites[4][9], Reference;
+	sf::Texture sprites[4][5], Reference;
 
 	int FACING = 0, intAnim = 0, frame = 0;
 
 	void Start() override
 	{
-		std::cout << "Player has been instanciated with " << getHealth() << " hp" << std::endl;
 		Reference.loadFromFile("content/textures/characters/MainCharacter/main_T_Pose.png");
 		sprites[0][0].loadFromFile("content/textures/characters/MainCharacter/main_front_idle.png");
 		sprites[0][1].loadFromFile("content/textures/characters/MainCharacter/main_front_walk.png");
@@ -37,25 +36,40 @@ public:
 		sprites[2][2].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_002.png");
 		sprites[2][3].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_003.png");
 		sprites[2][4].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_004.png");
-		sprites[2][5].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_005.png");
-		sprites[2][6].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_006.png");
-		sprites[2][7].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_007.png");
-		sprites[2][8].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_008.png");
 
-		sprites[3][0].loadFromFile("content/textures/characters/MainCharacter/main_left_idle.png");
-		sprites[3][1].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_001.png");
-		sprites[3][2].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_002.png");
-		sprites[3][3].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_003.png");
-		sprites[3][4].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_004.png");
-		sprites[3][5].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_005.png");
-		sprites[3][6].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_006.png");
-		sprites[3][7].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_007.png");
-		sprites[3][8].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_left_008.png");
+		sprites[3][0].loadFromFile("content/textures/characters/MainCharacter/main_right_idle.png");
+		sprites[3][1].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_right_001.png");
+		sprites[3][2].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_right_002.png");
+		sprites[3][3].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_right_003.png");
+		sprites[3][4].loadFromFile("content/textures/characters/MainCharacter/main_side_animated_right_004.png");
+
+		PlayerShape.setSize(sf::Vector2f(64, 128));
+		setPosition(500, 500);
+	}
+
+	void Revert()
+	{
+		std::cout << "Reverting player position" << std::endl;
+		setPosition(prevX, prevY);
+	}
+
+	void Revert(std::string flag)
+	{
+		std::cout << "Reverting player position" << std::endl;
+		if (flag == "onlyX")
+		{
+			setPosition(prevX, getPosition().y);
+		}
+		else if (flag == "onlyY")
+		{
+			setPosition(getPosition().x, prevY);
+		}
 	}
 
 	void Update(sf::RenderWindow& getWindow) override
 	{
-		sf::RectangleShape Player(sf::Vector2f(32, 64));
+		prevX = getPosition().x;
+		prevY = getPosition().y;
 		int x = 0, y = 0;
 
 		switch (FACING)
@@ -206,7 +220,7 @@ public:
 			intAnim = 0;
 		}
 
-		if (frame >= 15 && (x != 0 || y != 0))
+		if (frame >= 10 && (x != 0 || y != 0))
 		{
 			if (FACING == 0 || FACING == 1)
 			{
@@ -221,7 +235,7 @@ public:
 			}
 			else if (FACING == 2 || FACING == 3)
 			{
-				if (intAnim < 8)
+				if (intAnim < 4)
 				{
 					intAnim++;
 				}
@@ -249,26 +263,41 @@ public:
 			frame++;
 		}
 		setPosition(getPosition().x + x, getPosition().y + y);
+		//setPosition(getPosition().x, getPosition().y);
 
-		Player.setTexture(&sprites[FACING][intAnim]);
-
-		if (FACING == 3)
-		{
-			Player.setScale(-1.0f, 1.0f);
-		}
-		else
-		{
-			Player.setScale(1.0f, 1.0f);
-		}
+		PlayerShape.setTexture(&sprites[FACING][intAnim]);
 
 		// Instead of showing a white box we show nothing, meh, work too (should load a T-pose)
 		if (sprites[FACING][intAnim].getSize().x == 0)
 		{
-			Player.setTexture(&Reference);
+			PlayerShape.setTexture(&Reference);
 		}
 
-		Player.setPosition(getPosition());
+		PlayerShape.setPosition(getPosition());
+		sf::Vector2f position = PlayerShape.getPosition();
+		position += getVelocity();
+		PlayerShape.setPosition(position);
 
-		getWindow.draw(Player);
+		getWindow.draw(PlayerShape);
 	}
+
+	sf::Vector2f getVelocity()
+	{
+		return velocity;
+	}
+
+	sf::RectangleShape getShape()
+	{
+		return PlayerShape;
+	}
+
+	void setVelocity(sf::Vector2f velocity)
+	{
+		this->velocity = velocity;
+	}
+
+private:
+	int prevX, prevY;
+	sf::Vector2f velocity;
+	sf::RectangleShape PlayerShape;
 };
