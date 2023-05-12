@@ -72,6 +72,8 @@ public:
 		prevY = getPosition().y;
 		int x = 0, y = 0;
 
+		int mult = 8;
+
 		switch (FACING)
 		{
 			default:
@@ -80,33 +82,33 @@ public:
 			case 1:
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 				{
-					y -= 4;
+					y -= 1 * mult;
 					FACING = 1;
 
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 					{
-						x -= 4;
+						x -= 1 * mult;
 					}
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 					{
-						x += 4;
+						x += 1 * mult;
 					}
 				}
 				else
 				{
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 					{
-						x -= 4;
+						x -= 1 * mult;
 						FACING = 2;
 					}
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 					{
-						x += 4;
+						x += 1 * mult;
 						FACING = 3;
 					}
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 					{
-						y -= 4;
+						y -= 1 * mult;
 						FACING = 0;
 					}
 				}
@@ -114,33 +116,33 @@ public:
 			case 0:
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 				{
-					y += 4;
+					y += 1 * mult;
 					FACING = 0;
 
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 					{
-						x -= 4;
+						x -= 1 * mult;
 					}
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 					{
-						x += 4;
+						x += 1 * mult;
 					}
 				}
 				else
 				{
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 					{
-						x += 4;
+						x += 1 * mult;
 						FACING = 2;
 					}
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 					{
-						x -= 4;
+						x -= 1 * mult;
 						FACING = 3;
 					}
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 					{
-						y -= 4;
+						y -= 1 * mult;
 						FACING = 1;
 					}
 				}
@@ -148,33 +150,33 @@ public:
 			case 2:
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 				{
-					x -= 4;
+					x -= 1 * mult;
 					FACING = 2;
 
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 					{
-						y += 4;
+						y += 1 * mult;
 					}
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 					{
-						y -= 4;
+						y -= 1 * mult;
 					}
 				}
 				else
 				{
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 					{
-						y += 4;
+						y += 1 * mult;
 						FACING = 0;
 					}
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 					{
-						y -= 4;
+						y -= 1 * mult;
 						FACING = 1;
 					}
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 					{
-						x -= 4;
+						x -= 1 * mult;
 						FACING = 3;
 					}
 				}
@@ -182,33 +184,33 @@ public:
 			case 3:
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 				{
-					x += 4;
+					x += 1 * mult;
 					FACING = 3;
 
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 					{
-						y += 4;
+						y += 1 * mult;
 					}
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 					{
-						y -= 4;
+						y -= 1 * mult;
 					}
 				}
 				else
 				{
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
 					{
-						y += 4;
+						y += 1 * mult;
 						FACING = 0;
 					}
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
 					{
-						y -= 4;
+						y -= 1 * mult;
 						FACING = 1;
 					}
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 					{
-						x += 4;
+						x += 1 * mult;
 						FACING = 2;
 					}
 				}
@@ -277,6 +279,11 @@ public:
 		sf::Vector2f position = PlayerShape.getPosition();
 		position += getVelocity();
 		PlayerShape.setPosition(position);
+
+		sf::RectangleShape hitbox(sf::Vector2f(64, 128));
+		hitbox.setPosition(PlayerShape.getPosition());
+		hitbox.setFillColor(sf::Color::Green);
+		getWindow.draw(hitbox);
 
 		getWindow.draw(PlayerShape);
 	}
