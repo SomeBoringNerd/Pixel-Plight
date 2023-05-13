@@ -14,6 +14,11 @@ void SceneManager::Update(sf::RenderWindow& getWindow)
 	scene->Render(getWindow);
 }
 
+void SceneManager::RefreshUI()
+{
+	scene->ReloadUI();
+}
+
 int SceneManager::SceneLoaded()
 {
 	return isSceneLoaded;

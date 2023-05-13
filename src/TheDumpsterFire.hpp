@@ -16,3 +16,6 @@ void LoadAnotherScene(std::string name);
 
 int getGlobalMusicVolume();
 int getWindowState();
+
+int getWindowSizeX();
+int getWindowSizeY();

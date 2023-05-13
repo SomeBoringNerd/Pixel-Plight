@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "../Scenes/Scene.hpp"
 
 #include <SFML/Audio.hpp>
@@ -16,6 +15,7 @@ public:
 	static void LoadMainMenu();
 	static void LoadCredits();
 	static void Update(sf::RenderWindow& getWindow);
+	static void RefreshUI();
 	static int SceneLoaded();
 	static SceneManager* getInstance()
 	{

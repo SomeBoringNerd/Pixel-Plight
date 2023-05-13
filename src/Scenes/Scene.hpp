@@ -10,5 +10,6 @@ class Scene
 {
 public:
 	virtual void Render(sf::RenderWindow&) {};
+	virtual void ReloadUI() {};
 	std::string name;
 };

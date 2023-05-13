@@ -40,6 +40,12 @@ public:
 	void ThisFunctionAllowTheCodeToCompileDontQuestionItPlease()
 	{}
 
+	static void OptionsButton(void* userData)
+	{
+		MainMenu* mainMenu = static_cast<MainMenu*>(userData);
+		mainMenu->ThisFunctionAllowTheCodeToCompileDontQuestionItPlease();
+	}
+
 	static void Exit(void* userData)
 	{
 		MainMenu* mainMenu = static_cast<MainMenu*>(userData);
@@ -108,11 +114,11 @@ public:
 		// Draw it
 		getWindow.draw(text);
 
-		Play->Render(getWindow, getWindow.getSize(), &PlayButton, this);
-		_Credit->Render(getWindow, getWindow.getSize(), &Credits, this);
-		Other->Render(getWindow, getWindow.getSize(), &OtherGames, this);
-		Option->Render(getWindow, getWindow.getSize());
-		Quit->Render(getWindow, getWindow.getSize(), &Exit, this);
+		Play->Render(getWindow, &PlayButton, this);
+		_Credit->Render(getWindow, &Credits, this);
+		Other->Render(getWindow, &OtherGames, this);
+		Option->Render(getWindow, &OptionsButton, this);
+		Quit->Render(getWindow, &Exit, this);
 	}
 
 private:

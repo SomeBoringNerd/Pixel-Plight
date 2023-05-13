@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../TheDumpsterFire.hpp"
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Network.hpp>
@@ -7,7 +8,6 @@
 #include <SFML/Window.hpp>
 #include <cmath>
 #include <iostream>
-
 class Button
 {
 public:
@@ -26,28 +26,45 @@ public:
 		return this->name;
 	}
 
-	bool Hover(sf::Vector2i pos, sf::Vector2u windowSize)
+	bool Hover(sf::Vector2i pos, sf::RectangleShape windowSize)
 	{
-		float heightPercentage = 0.09f;
-		float buttonHeight = windowSize.y * heightPercentage;
+		sf::RectangleShape m1(sf::Vector2f(8, 8));
 
-		float xRatio = (float)windowSize.x / (float)this->initialWindowSize.x;
-		float yRatio = (float)windowSize.y / (float)this->initialWindowSize.y;
+		float scaleX = static_cast<float>(getWindowSizeX()) / 1280.0f;
+		float scaleY = static_cast<float>(getWindowSizeY()) / 720.0f;
 
-		float currentX = this->x * xRatio;
-		float currentY = this->y * yRatio;
-		float currentWidth = this->length * xRatio;
-		float currentHeight = buttonHeight * yRatio;
+		m1.setPosition(sf::Vector2f(pos.x / scaleX, pos.y / scaleY));
 
-		return (pos.x < currentX + currentWidth && pos.x > currentX && pos.y < currentY + currentHeight && pos.y > currentY);
+		return windowSize.getGlobalBounds().intersects(m1.getGlobalBounds());
 	}
 
-	void Render(sf::RenderWindow& getWindow, sf::Vector2u windowSize, void (*_setup)(void*), void* userData = nullptr)
+	void Render(sf::RenderWindow& getWindow, void (*_setup)(void*), void* userData = nullptr)
 	{
+		sf::RectangleShape b1(sf::Vector2f(length, 75));
+		b1.setPosition(x, y);
 
-		this->Render(getWindow, windowSize);
+		float scaleX = static_cast<float>(getWindowSizeX()) / 1280.0f;
+		float scaleY = static_cast<float>(getWindowSizeY()) / 720.0f;
 
-		bool isHovering = Hover(sf::Mouse::getPosition(getWindow), windowSize);
+		sf::Text text("Scaled mouse position : " + std::to_string(scaleX) + " | " + std::to_string(scaleY), font);
+
+		text.setCharacterSize(20);
+		text.setLetterSpacing(2);
+		text.setPosition(sf::Vector2f(5, 0));
+		text.setStyle(sf::Text::Regular);
+
+		getWindow.draw(text);
+
+		text.setString("Real mouse coordinates : " + std::to_string(sf::Mouse::getPosition(getWindow).x) + " | " + std::to_string(sf::Mouse::getPosition(getWindow).y));
+		text.setPosition(sf::Vector2f(5, 24));
+		getWindow.draw(text);
+
+		text.setString("Relative mouse coordinates : " + std::to_string(sf::Mouse::getPosition(getWindow).x / scaleX) + " | " + std::to_string(sf::Mouse::getPosition(getWindow).y / scaleY));
+		text.setPosition(sf::Vector2f(5, 48));
+		getWindow.draw(text);
+
+		bool isHovering = Hover(sf::Mouse::getPosition(getWindow), b1);
+		this->Render(getWindow, isHovering);
 
 		if (isHovering && sf::Mouse::isButtonPressed(sf::Mouse::Left) && sf::Mouse::isButtonPressed(sf::Mouse::Left) != mouseState)
 		{
@@ -60,16 +77,22 @@ public:
 		mouseState = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 	}
 
-	void Render(sf::RenderWindow& getWindow, sf::Vector2u windowSize)
+	void Render(sf::RenderWindow& getWindow, int isHovered)
 	{
-
-		if (initialWindowSize.x == 0 || initialWindowSize.y == 0)
-		{
-			this->initialWindowSize = windowSize;
-		}
-		bool isHovering = Hover(sf::Mouse::getPosition(getWindow), windowSize);
-
 		sf::RectangleShape b1(sf::Vector2f(length, 75));
+		b1.setPosition(x, y);
+
+		sf::RectangleShape m1(sf::Vector2f(8, 8));
+
+		float scaleX = static_cast<float>(getWindowSizeX()) / 1280.0f;
+		float scaleY = static_cast<float>(getWindowSizeY()) / 720.0f;
+
+		m1.setPosition(sf::Vector2f(sf::Mouse::getPosition(getWindow).x / scaleX, sf::Mouse::getPosition(getWindow).y / scaleY));
+
+		//
+
+		bool isHovering = isHovered;
+
 		if (!isHovering)
 		{
 			static const sf::Color DarkGray(69, 69, 69);
@@ -79,7 +102,7 @@ public:
 		{
 			b1.setFillColor(sf::Color::Red);
 		}
-		b1.setPosition(x, y);
+
 		getWindow.draw(b1);
 
 		sf::RectangleShape b2(sf::Vector2f(length - 10, 65));
@@ -111,6 +134,7 @@ public:
 		text.setPosition(sf::Vector2f(x + length / 2 - text.getLocalBounds().width / 2, y - 10));
 
 		getWindow.draw(text);
+		getWindow.draw(m1);
 	}
 
 private:

@@ -77,7 +77,7 @@ public:
 		text.setPosition((1280 / 2) - (text.getLocalBounds().width / 2), 290);
 		getWindow.draw(text);
 
-		back->Render(getWindow, getWindow.getSize(), &BackToMain, this);
+		back->Render(getWindow, &BackToMain, this);
 	}
 
 private:

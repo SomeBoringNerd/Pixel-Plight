@@ -22,6 +22,17 @@ static void Exit()
 }
 
 int focus = 1;
+int x = 0, y = 0;
+
+int getWindowSizeX()
+{
+	return x;
+}
+int getWindowSizeY()
+{
+	return y;
+}
+
 int getWindowState()
 {
 	return focus;
@@ -83,6 +94,16 @@ int main()
 			else if (event.type == sf::Event::LostFocus)
 			{
 				focus = 0;
+			}
+			else if (event.type == sf::Event::Resized)
+			{
+				x = event.size.width;
+				y = event.size.height;
+				SceneManager::RefreshUI();
+				std::cout << "new window size : " << x << " / " << y << std::endl;
+				float scaleX = static_cast<float>(getWindowSizeX()) / 1280.0f;
+				float scaleY = static_cast<float>(getWindowSizeY()) / 720.0f;
+				std::cout << scaleX << " | " << scaleY << std::endl;
 			}
 		}
 
