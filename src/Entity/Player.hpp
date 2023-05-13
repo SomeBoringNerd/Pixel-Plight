@@ -280,10 +280,10 @@ public:
 		position += getVelocity();
 		PlayerShape.setPosition(position);
 
-		sf::RectangleShape hitbox(sf::Vector2f(64, 128));
-		hitbox.setPosition(PlayerShape.getPosition());
-		hitbox.setFillColor(sf::Color::Green);
-		getWindow.draw(hitbox);
+		//sf::RectangleShape hitbox(sf::Vector2f(64, 128));
+		//hitbox.setPosition(PlayerShape.getPosition());
+		//hitbox.setFillColor(sf::Color::Green);
+		//getWindow.draw(hitbox);
 
 		getWindow.draw(PlayerShape);
 	}

@@ -43,7 +43,7 @@ public:
 		sf::RectangleShape b1(sf::Vector2f(length, 75));
 		b1.setPosition(x, y);
 
-		float scaleX = static_cast<float>(getWindowSizeX()) / 1280.0f;
+		/*float scaleX = static_cast<float>(getWindowSizeX()) / 1280.0f;
 		float scaleY = static_cast<float>(getWindowSizeY()) / 720.0f;
 
 		sf::Text text("Scaled mouse position : " + std::to_string(scaleX) + " | " + std::to_string(scaleY), font);
@@ -61,7 +61,7 @@ public:
 
 		text.setString("Relative mouse coordinates : " + std::to_string(sf::Mouse::getPosition(getWindow).x / scaleX) + " | " + std::to_string(sf::Mouse::getPosition(getWindow).y / scaleY));
 		text.setPosition(sf::Vector2f(5, 48));
-		getWindow.draw(text);
+		getWindow.draw(text);*/
 
 		bool isHovering = Hover(sf::Mouse::getPosition(getWindow), b1);
 		this->Render(getWindow, isHovering);
@@ -82,18 +82,7 @@ public:
 		sf::RectangleShape b1(sf::Vector2f(length, 75));
 		b1.setPosition(x, y);
 
-		sf::RectangleShape m1(sf::Vector2f(8, 8));
-
-		float scaleX = static_cast<float>(getWindowSizeX()) / 1280.0f;
-		float scaleY = static_cast<float>(getWindowSizeY()) / 720.0f;
-
-		m1.setPosition(sf::Vector2f(sf::Mouse::getPosition(getWindow).x / scaleX, sf::Mouse::getPosition(getWindow).y / scaleY));
-
-		//
-
-		bool isHovering = isHovered;
-
-		if (!isHovering)
+		if (!isHovered)
 		{
 			static const sf::Color DarkGray(69, 69, 69);
 			b1.setFillColor(DarkGray);
@@ -106,7 +95,7 @@ public:
 		getWindow.draw(b1);
 
 		sf::RectangleShape b2(sf::Vector2f(length - 10, 65));
-		if (!isHovering)
+		if (!isHovered)
 		{
 			b2.setFillColor(sf::Color::White);
 		}
@@ -122,7 +111,7 @@ public:
 		text.setCharacterSize(72);
 		text.setLetterSpacing(2);
 		text.setStyle(sf::Text::Bold);
-		if (!isHovering)
+		if (!isHovered)
 		{
 			text.setFillColor(sf::Color::Black);
 		}
@@ -134,7 +123,6 @@ public:
 		text.setPosition(sf::Vector2f(x + length / 2 - text.getLocalBounds().width / 2, y - 10));
 
 		getWindow.draw(text);
-		getWindow.draw(m1);
 	}
 
 private:

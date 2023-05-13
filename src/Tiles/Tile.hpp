@@ -148,10 +148,10 @@ public:
 
 		getWindow.draw(TileShape);
 
-		getWindow.draw(topCollider);
-		getWindow.draw(bottomCollider);
-		getWindow.draw(rightCollider);
-		getWindow.draw(leftCollider);
+		// getWindow.draw(topCollider);
+		// getWindow.draw(bottomCollider);
+		// getWindow.draw(rightCollider);
+		// getWindow.draw(leftCollider);
 	}
 
 	sf::RectangleShape getShape()
