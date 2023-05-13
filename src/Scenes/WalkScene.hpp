@@ -56,11 +56,6 @@ public:
 
 		getWindow.draw(BackGround);
 
-		//for (Tile* tile : tileset)
-		//{
-		//	tile->DrawHitBoxes(getWindow, player);
-		//}
-
 		for (Tile* tile : tileset)
 		{
 			tile->Render(getWindow, player);

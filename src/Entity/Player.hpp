@@ -22,7 +22,7 @@ public:
 
 	void Start() override
 	{
-		Reference.loadFromFile("content/textures/characters/MainCharacter/main_T_Pose.png");
+		Reference.loadFromFile("content/textures/tiles/EmptyTile.png");
 		sprites[0][0].loadFromFile("content/textures/characters/MainCharacter/main_front_idle.png");
 		sprites[0][1].loadFromFile("content/textures/characters/MainCharacter/main_front_walk.png");
 		sprites[0][2].loadFromFile("content/textures/characters/MainCharacter/main_front_walk2.png");
@@ -72,8 +72,11 @@ public:
 		prevY = getPosition().y;
 		int x = 0, y = 0;
 
-		int mult = 8;
+		int mult = 4;
 
+		// this fucking monstrosity of a code is an animation controller.
+		// even ChatGPT couldnt optimise it
+		// I dont give a shit about how ugly it is, it just fucking work
 		switch (FACING)
 		{
 			default:
@@ -88,6 +91,7 @@ public:
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 					{
 						x -= 1 * mult;
+						FACING = 2;
 					}
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 					{
@@ -265,14 +269,18 @@ public:
 			frame++;
 		}
 		setPosition(getPosition().x + x, getPosition().y + y);
-		//setPosition(getPosition().x, getPosition().y);
 
 		PlayerShape.setTexture(&sprites[FACING][intAnim]);
 
-		// Instead of showing a white box we show nothing, meh, work too (should load a T-pose)
+		// Sometime it fail to load the correct sprite.
+		// let's say you are on intAnim 4 and FACING 2 (4th animation frame of the left walk animation)
+		// then you go up, you'll want to load the 4th frame of the walk up animation
+		// but we only have 3 frames.
+		// this code will replace the empty frame with the first frame of the corresponding FACING animation.
+		// this also make the T-pose frame unused
 		if (sprites[FACING][intAnim].getSize().x == 0)
 		{
-			PlayerShape.setTexture(&Reference);
+			PlayerShape.setTexture(&sprites[FACING][0]);
 		}
 
 		PlayerShape.setPosition(getPosition());
