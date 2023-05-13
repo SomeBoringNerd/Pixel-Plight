@@ -66,24 +66,6 @@ public:
 			tile->Render(getWindow, player);
 		}
 		player->Render(getWindow);
-
-		sf::RectangleShape behindTextBox;
-		behindTextBox.setFillColor(sf::Color::Black);
-
-		sf::Font font;
-		font.loadFromFile("content/fonts/BebasNeue-Regular.ttf");
-		// Create a text
-		std::string _name = "Pixel Pligt dev mode (collision test)";
-		sf::Text text(_name, font);
-		text.setCharacterSize(40);
-		text.setLetterSpacing(2);
-		text.setStyle(sf::Text::Bold);
-
-		text.setPosition(10, 10);
-		behindTextBox.setSize(sf::Vector2f(text.getGlobalBounds().width + 32, 64));
-		// Draw it
-		//getWindow.draw(behindTextBox);
-		//getWindow.draw(text);
 	}
 
 private:
