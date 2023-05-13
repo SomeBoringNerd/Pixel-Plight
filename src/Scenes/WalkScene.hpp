@@ -29,14 +29,14 @@ public:
 		{
 			for (int x = 0; x < 1280; x += 64)
 			{
-				tileset.insert(tileset.begin(), new Tile(sf::Vector2f(x, 720 - 64), "debug_tile", 1));
-				tileset.insert(tileset.begin(), new Tile(sf::Vector2f(x, 0), "debug_tile", 1));
+				tileset.insert(tileset.begin(), new Tile(sf::Vector2f(x, 720 - 64), "EmptyTile", 1));
+				tileset.insert(tileset.begin(), new Tile(sf::Vector2f(x, 0), "EmptyTile", 1));
 			}
 
 			for (int y = 0; y < 720; y += 64)
 			{
-				tileset.insert(tileset.begin(), new Tile(sf::Vector2f(0, y), "debug_tile"));
-				tileset.insert(tileset.begin(), new Tile(sf::Vector2f(1280 - 64, y), "debug_tile"));
+				tileset.insert(tileset.begin(), new Tile(sf::Vector2f(0, y), "EmptyTile"));
+				tileset.insert(tileset.begin(), new Tile(sf::Vector2f(1280 - 64, y), "EmptyTile"));
 			}
 		}
 
@@ -48,10 +48,18 @@ public:
 
 	void Render(sf::RenderWindow& getWindow) override
 	{
-		for (Tile* tile : tileset)
-		{
-			tile->DrawHitBoxes(getWindow, player);
-		}
+		sf::Texture BackGround_Texture;
+		BackGround_Texture.loadFromFile("content/textures/game_background.png");
+
+		sf::RectangleShape BackGround(sf::Vector2f(1280, 720));
+		BackGround.setTexture(&BackGround_Texture);
+
+		getWindow.draw(BackGround);
+
+		//for (Tile* tile : tileset)
+		//{
+		//	tile->DrawHitBoxes(getWindow, player);
+		//}
 
 		for (Tile* tile : tileset)
 		{
@@ -74,8 +82,8 @@ public:
 		text.setPosition(10, 10);
 		behindTextBox.setSize(sf::Vector2f(text.getGlobalBounds().width + 32, 64));
 		// Draw it
-		getWindow.draw(behindTextBox);
-		getWindow.draw(text);
+		//getWindow.draw(behindTextBox);
+		//getWindow.draw(text);
 	}
 
 private:
