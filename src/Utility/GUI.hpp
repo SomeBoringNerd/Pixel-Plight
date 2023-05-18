@@ -43,25 +43,28 @@ public:
 		sf::RectangleShape b1(sf::Vector2f(length, 75));
 		b1.setPosition(x, y);
 
-		/*float scaleX = static_cast<float>(getWindowSizeX()) / 1280.0f;
-		float scaleY = static_cast<float>(getWindowSizeY()) / 720.0f;
+		if (drawEntityHitboxes())
+		{
+			float scaleX = static_cast<float>(getWindowSizeX()) / 1280.0f;
+			float scaleY = static_cast<float>(getWindowSizeY()) / 720.0f;
 
-		sf::Text text("Scaled mouse position : " + std::to_string(scaleX) + " | " + std::to_string(scaleY), font);
+			sf::Text text("Scaled mouse position : " + std::to_string(scaleX) + " | " + std::to_string(scaleY), font);
 
-		text.setCharacterSize(20);
-		text.setLetterSpacing(2);
-		text.setPosition(sf::Vector2f(5, 0));
-		text.setStyle(sf::Text::Regular);
+			text.setCharacterSize(20);
+			text.setLetterSpacing(2);
+			text.setPosition(sf::Vector2f(5, 0));
+			text.setStyle(sf::Text::Regular);
 
-		getWindow.draw(text);
+			getWindow.draw(text);
 
-		text.setString("Real mouse coordinates : " + std::to_string(sf::Mouse::getPosition(getWindow).x) + " | " + std::to_string(sf::Mouse::getPosition(getWindow).y));
-		text.setPosition(sf::Vector2f(5, 24));
-		getWindow.draw(text);
+			text.setString("Real mouse coordinates : " + std::to_string(sf::Mouse::getPosition(getWindow).x) + " | " + std::to_string(sf::Mouse::getPosition(getWindow).y));
+			text.setPosition(sf::Vector2f(5, 24));
+			getWindow.draw(text);
 
-		text.setString("Relative mouse coordinates : " + std::to_string(sf::Mouse::getPosition(getWindow).x / scaleX) + " | " + std::to_string(sf::Mouse::getPosition(getWindow).y / scaleY));
-		text.setPosition(sf::Vector2f(5, 48));
-		getWindow.draw(text);*/
+			text.setString("Relative mouse coordinates : " + std::to_string(sf::Mouse::getPosition(getWindow).x / scaleX) + " | " + std::to_string(sf::Mouse::getPosition(getWindow).y / scaleY));
+			text.setPosition(sf::Vector2f(5, 48));
+			getWindow.draw(text);
+		}
 
 		bool isHovering = Hover(sf::Mouse::getPosition(getWindow), b1);
 		this->Render(getWindow, isHovering);
@@ -132,4 +135,40 @@ private:
 	float x, y, length;
 	float widthPercentage, heightPercentage;
 	sf::Vector2u initialWindowSize;
+};
+
+class Text
+{
+public:
+	Text(std::string name, int fontSize)
+	{
+		this->name = name;
+		this->fontSize = fontSize;
+	}
+
+	void Render(sf::RenderWindow& getWindow, sf::Vector2f pos, bool centered)
+	{
+		sf::Font font;
+		font.loadFromFile("content/fonts/BebasNeue-Regular.ttf");
+		std::string _name = name;
+		sf::Text text(_name, font);
+		text.setCharacterSize(fontSize);
+		text.setLetterSpacing(2);
+		text.setStyle(sf::Text::Bold);
+
+		// for stupid reasons, _text width is always 0 no matter what so i have to do this shit
+		if (!centered)
+		{
+			text.setPosition(pos);
+		}
+		else
+		{
+			text.setPosition(sf::Vector2f((1280 / 2) - (text.getGlobalBounds().width / 2), pos.y));
+		}
+		getWindow.draw(text);
+	}
+
+private:
+	std::string name;
+	float fontSize;
 };

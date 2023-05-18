@@ -8,6 +8,7 @@
 #include <string>
 
 #include "../Entity/Player.hpp"
+#include "../TheDumpsterFire.hpp"
 
 class Tile
 {
@@ -148,10 +149,13 @@ public:
 
 		getWindow.draw(TileShape);
 
-		// getWindow.draw(topCollider);
-		// getWindow.draw(bottomCollider);
-		// getWindow.draw(rightCollider);
-		// getWindow.draw(leftCollider);
+		if (drawEntityHitboxes())
+		{
+			getWindow.draw(topCollider);
+			getWindow.draw(bottomCollider);
+			getWindow.draw(rightCollider);
+			getWindow.draw(leftCollider);
+		}
 	}
 
 	sf::RectangleShape getShape()

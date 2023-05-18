@@ -37,7 +37,11 @@ int getWindowState()
 {
 	return focus;
 }
-
+bool vDrawEntityHitboxes = false;
+bool drawEntityHitboxes()
+{
+	return vDrawEntityHitboxes;
+}
 int main()
 {
 	util::Platform platform;
@@ -81,6 +85,8 @@ int main()
 
 	SceneManager::LoadScene(menu);
 
+	bool wasntPressedBefore = true;
+
 	while (window.isOpen())
 	{
 		while (window.pollEvent(event))
@@ -105,6 +111,20 @@ int main()
 				float scaleY = static_cast<float>(getWindowSizeY()) / 720.0f;
 				std::cout << scaleX << " | " << scaleY << std::endl;
 			}
+		}
+
+		// Inside the game loop or the function where you check input
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F3))
+		{
+			if (!wasntPressedBefore)
+			{
+				wasntPressedBefore = true;
+				vDrawEntityHitboxes = !vDrawEntityHitboxes;
+			}
+		}
+		else
+		{
+			wasntPressedBefore = false;
 		}
 
 		// dont run game update if the game is not focused

@@ -91,7 +91,6 @@ public:
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 					{
 						x -= 1 * mult;
-						FACING = 2;
 					}
 					else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 					{
@@ -288,10 +287,13 @@ public:
 		position += getVelocity();
 		PlayerShape.setPosition(position);
 
-		//sf::RectangleShape hitbox(sf::Vector2f(64, 128));
-		//hitbox.setPosition(PlayerShape.getPosition());
-		//hitbox.setFillColor(sf::Color::Green);
-		//getWindow.draw(hitbox);
+		if (drawEntityHitboxes())
+		{
+			sf::RectangleShape hitbox(sf::Vector2f(64, 128));
+			hitbox.setPosition(PlayerShape.getPosition());
+			hitbox.setFillColor(sf::Color::Green);
+			getWindow.draw(hitbox);
+		}
 
 		getWindow.draw(PlayerShape);
 	}

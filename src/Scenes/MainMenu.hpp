@@ -30,6 +30,8 @@ public:
 		Option = new Button("Options", ((1280 / 2) - 300), 550, 290);
 		Quit = new Button("Quit", ((1280 / 2) + 10), 550, 290);
 
+		GameName = new Text("Pixel Plight", 80);
+
 		music.openFromFile("content/music/main.wav");
 		music.setVolume(getGlobalMusicVolume());
 		music.setLoop(true);
@@ -101,18 +103,7 @@ public:
 
 		getWindow.draw(BackGround);
 
-		sf::Font font;
-		font.loadFromFile("content/fonts/BebasNeue-Regular.ttf");
-		// Create a text
-		std::string _name = "Pixel Plight";
-		sf::Text text(_name, font);
-		text.setCharacterSize(80);
-		text.setLetterSpacing(2);
-		text.setStyle(sf::Text::Bold);
-
-		text.setPosition((1280 / 2) - (text.getLocalBounds().width / 2), 50);
-		// Draw it
-		getWindow.draw(text);
+		GameName->Render(getWindow, sf::Vector2f(0, 50), true);
 
 		Play->Render(getWindow, &PlayButton, this);
 		_Credit->Render(getWindow, &Credits, this);
@@ -125,4 +116,5 @@ private:
 	sf::Music music;
 	sf::RenderWindow* window;
 	Button *Quit, *Play, *Option, *_Credit, *Other;
+	Text* GameName;
 };

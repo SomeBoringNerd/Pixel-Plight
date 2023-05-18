@@ -19,3 +19,5 @@ int getWindowState();
 
 int getWindowSizeX();
 int getWindowSizeY();
+
+bool drawEntityHitboxes();

@@ -23,6 +23,14 @@ public:
 
 		back = new Button("Back", (25), 720 - 100, 300);
 
+		Special = new Text("Special thanks to", 80);
+
+		Zoe = new Text("@zoeyoung2563 : musics that are used in the game", 40);
+
+		Aseprite1 = new Text("Aseprite team : making an amazing", 40);
+
+		Aseprite2 = new Text("pixel art software and making it open source", 40);
+
 		music.openFromFile("content/music/credit.wav");
 		music.setVolume(getGlobalMusicVolume());
 		music.setLoop(true);
@@ -49,39 +57,22 @@ public:
 
 		getWindow.draw(BackGround);
 
-		sf::Font font;
-		font.loadFromFile("content/fonts/BebasNeue-Regular.ttf");
-		// Create a text
-		std::string _name = "Special thanks to";
-		sf::Text text(_name, font);
-		text.setCharacterSize(80);
-		text.setLetterSpacing(2);
-		text.setStyle(sf::Text::Bold);
-		text.setPosition((1280 / 2) - (text.getLocalBounds().width / 2), 50);
-		getWindow.draw(text);
-
-		text.setCharacterSize(40);
-
-		_name = "@zoeyoung2563 : musics that are used in the game";
-		text.setString(_name);
-		text.setPosition((1280 / 2) - (text.getLocalBounds().width / 2), 200);
-		getWindow.draw(text);
-
-		_name = "Aseprite team : making an amazing";
-		text.setString(_name);
-		text.setPosition((1280 / 2) - (text.getLocalBounds().width / 2), 250);
-		getWindow.draw(text);
-
-		_name = "pixel art software and making it open source";
-		text.setString(_name);
-		text.setPosition((1280 / 2) - (text.getLocalBounds().width / 2), 290);
-		getWindow.draw(text);
+		// Note : vector x position is overriden so just set it to 0 and forget about it
+		Special->Render(getWindow, sf::Vector2f(0, 50), true);
+		Zoe->Render(getWindow, sf::Vector2f(0, 200), true);
+		Aseprite1->Render(getWindow, sf::Vector2f(0, 250), true);
+		Aseprite2->Render(getWindow, sf::Vector2f(0, 290), true);
 
 		back->Render(getWindow, &BackToMain, this);
 	}
 
 private:
 	Button* back;
+	Text* Special;
+	Text* Zoe;
+	Text* Aseprite1;
+	Text* Aseprite2;
+
 	sf::Music music;
 	sf::RenderWindow* window;
 };
