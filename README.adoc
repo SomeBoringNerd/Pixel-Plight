@@ -1,6 +1,6 @@
 = Another Boring C++ Project
 
-you know them, you love them, random github project that i want to fork to learn stuff
+Source code of a random prototype to learn SFML
 
 = Credits
 [cols="~,~"]
